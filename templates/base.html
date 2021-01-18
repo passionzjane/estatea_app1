@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'assets/css/all.css' %}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}">
+    <!-- Custom -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+    <title>BT Real Estate | {% block title %} {% endblock %}</title>
+</head>
+
+<body>
+<!-- Top Bar -->
+<section id="top-bar" class="p-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <i class="fas fa-phone"></i> (617)-555-5555
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-envelope-open"></i> contact@btrealestate.co
+            </div>
+            <div class="col-md-4">
+                <div class="social text-right">
+                    <a href="#">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'pages:index' %}">
+            <img src="{% static 'assets/img/logo.png' %}" class="logo" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <ul class="navbar-nav">
+                <li
+                        {% if '/' == request.path %}
+                            class="nav-item active mr-3"
+                        {% else %}
+                            class="nav-item  mr-3"
+                        {% endif %}
+                >
+                    <a class="nav-link" href="{% url 'pages:index' %}">Home</a>
+                </li>
+                <li
+                        {% if '/about' == request.path %}
+                            class="nav-item active mr-3"
+                        {% else %}
+                            class="nav-item  mr-3"
+                        {% endif %}
+                >
+
+                    <a class="nav-link" href="{% url 'pages:about' %}">About</a>
+                </li>
+                <li
+                        {% if '/listings' == request.path %}
+                            class="nav-item active mr-3"
+                        {% else %}
+                            class="nav-item  mr-3"
+                        {% endif %}
+                >
+                    <a class="nav-link" href="{% url 'listings:listings' %}">Featured Listings</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <li
+
+                            {% if 'dashboard' in request.path %}
+                                class="nav-item active mr-3"
+                            {% else %}
+                                class="nav-item  mr-3"
+                            {% endif %}
+                    >
+                        <a class="nav-link" href="{% url 'accounts:dashboard' %}">Welcome {{ user.username }}(Dashboard)</a>
+                    </li>
+                    <li class="nav-item mr-3">
+                        <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
+                            <i class="fas fa-sign-out-alt"></i>Logout
+                        </a>
+                        <form action="{% url 'accounts:logout' %}" method="POST" id="logout">
+                            {% csrf_token %}
+                            <input type="hidden">
+                        </form>
+
+
+                    </li>
+                {% else %}
+                    <li
+
+                            {% if '/register' == request.path %}
+                                class="nav-item active mr-3"
+                            {% else %}
+                                class="nav-item  mr-3"
+                            {% endif %}
+                    >
+                        <a class="nav-link" href="{% url 'accounts:register' %}">
+                            <i class="fas fa-user-plus"></i> Register</a>
+                    </li>
+                    <li
+
+                            {% if '/login' == request.path %}
+                                class="nav-item active mr-3"
+                            {% else %}
+                                class="nav-item  mr-3"
+                            {% endif %}
+                    >
+                        <a class="nav-link" href="{% url 'accounts:login' %}">
+                            <i class="fas fa-sign-in-alt"></i>Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% block content %}
+
+{% endblock content %}
+<!-- Footer -->
+<footer id="main-footer" class="py-4 bg-primary text-white text-center">
+    Copyright &copy;
+    <span class="year"></span> BT Real Estate
+</footer>
+
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %} "></script>
+<script src="{% static 'assets/js/bootstrap.bundle.min.js' %} "></script>
+<script src="{% static 'assets/js/main.js' %} "></script>
+</body>
+
+</html>
