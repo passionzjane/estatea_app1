@@ -35,11 +35,11 @@ def register(request):
                     #return redirect('index')
                     user.save()
                     messages.success(request, 'you are registered and can log in')
-                    return redirect('accounts:login')
+                    return redirect('/accounts/login')
 
         else:
             messages.error(request, 'passwords do not match')
-            return redirect('accounts:register')
+            return redirect('/accounts/register')
     else:
         return render(request, 'accounts/register.html')
 
