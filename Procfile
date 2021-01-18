@@ -1,0 +1,1 @@
+web: gunicorn estatea_app1.wsgi --log-file -
